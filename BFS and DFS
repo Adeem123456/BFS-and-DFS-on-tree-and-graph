@@ -1,0 +1,91 @@
+class TreeNode:
+    def __init__(self, value):
+        self.value = value
+        self.children = []
+
+def bfs_tree(root):
+    if not root:
+        return []
+    queue = [root]
+    result = []
+    while queue:
+        node = queue.pop(0)
+        result.append(node.value)
+        for child in node.children:
+            queue.append(child)
+    return result
+
+# Example usage:
+root = TreeNode(1)
+root.children = [TreeNode(2), TreeNode(3), TreeNode(4)]
+root.children[0].children = [TreeNode(5), TreeNode(6)]
+print("BFS Tree:", bfs_tree(root))
+
+
+def bfs_graph(graph, start):
+    visited = set()
+    queue = [start]
+    result = []
+    while queue:
+        vertex = queue.pop(0)
+        if vertex not in visited:
+            result.append(vertex)
+            visited.add(vertex)
+            queue.extend(graph[vertex] - visited)
+    return result
+
+# Example usage:
+graph = {
+    'A': {'B', 'C'},
+    'B': {'A', 'D', 'E'},
+    'C': {'A', 'F'},
+    'D': {'B'},
+    'E': {'B', 'F'},
+    'F': {'C', 'E'}
+}
+print("BFS Graph:", bfs_graph(graph, 'A'))
+
+
+
+
+def dfs_tree(root):
+    if not root:
+        return []
+    stack = [root]
+    result = []
+    while stack:
+        node = stack.pop()
+        result.append(node.value)
+        stack.extend(reversed(node.children))
+    return result[::-1]
+
+# Example usage:
+root = TreeNode(1)
+root.children = [TreeNode(2), TreeNode(3), TreeNode(4)]
+root.children[0].children = [TreeNode(5), TreeNode(6)]
+print("DFS Tree:", dfs_tree(root))
+
+
+
+def dfs_graph(graph, start):
+    visited = set()
+    stack = [start]
+    result = []
+    while stack:
+        vertex = stack.pop()
+        if vertex not in visited:
+            result.append(vertex)
+            visited.add(vertex)
+            stack.extend(graph[vertex] - visited)
+    return result
+
+# Example usage:
+graph = {
+    'A': {'B', 'C'},
+    'B': {'A', 'D', 'E'},
+    'C': {'A', 'F'},
+    'D': {'B'},
+    'E': {'B', 'F'},
+    'F': {'C', 'E'}
+}
+print("DFS Graph:", dfs_graph(graph, 'A'))
